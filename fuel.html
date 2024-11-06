@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- ป้องกันการซูม -->
+    <title>Fuel Consumption Calculator</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            background-color: #606060a8;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 550px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2bae66;
+        }
+
+        .form-group {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2bae66;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        button:hover {
+            background-color: #1c7544;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: center;
+            opacity: 0;
+            animation: popup-bg 0.5s forwards;
+
+            p {
+
+                color: black;
+            }
+        }
+
+        .popup h2,
+        .popup .content {
+            opacity: 0;
+            animation: popup-content 0.5s forwards;
+            animation-delay: 0.15s;
+        }
+
+        .popup .close-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2bae66;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .close-btn:hover {
+            background-color: #1c7544;
+        }
+
+
+        .goback {
+            position: fixed;
+            width: 100px;
+            height: 60px;
+            background-color: #333;
+            border: solid white 1px;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+            h1 {
+                font-size: 36px;
+                color: #fff;
+            }
+
+            h1:hover {
+                font-size: 36px;
+                color: red;
+            }
+        }
+
+        .delline {
+            text-decoration-line: none;
+        }
+
+        p {
+
+            color: #fff;
+        }
+
+        @keyframes popup-bg {
+            from {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes popup-content {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+
+
+
+            .container {
+                width: 100%;
+                padding: 10px;
+                scale: 0.9;
+                transform: translateY(-20%);
+            }
+
+            form {
+                align-items: center;
+                text-align: center;
+            }
+
+            label,
+            input,
+            select,
+            button {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            .goback {
+                transform: translate(-10%, -70%);
+                margin-top: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>คำนวณอัตราสิ้นเปลืองเชื้อเพลิง</h1>
+        <p>กรอกข้อมูลด้านล่าง</p>
+        <form id="fuelForm" name="hello-sheet">
+            <div class="form-group">
+                <label for="fuelType">ชนิดเชื้อเพลิง</label>
+                <select id="fuelType" name="fuelType" required>
+                    <option value="" disabled selected>เลือกชนิดเชื้อเพลิง</option>
+                    <option value="เบนซิน 95">เบนซิน 95</option>
+                    <option value="แก๊สโซฮอล์ 95">แก๊สโซฮอล์ 95</option>
+                    <option value="แก๊สโซฮอล์ 91">แก๊สโซฮอล์ 91</option>
+                    <option value="แก๊สโซฮอล์ E20">แก๊สโซฮอล์ E20</option>
+                    <option value="ดีเซล B7">ดีเซล B7</option>
+                    <option value="ดีเซล B20">ดีเซล B20</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="distance">ระยะทาง (กิโลเมตร)</label>
+                <input id="distance" name="distance" type="number" placeholder="กรอกระยะทางที่เดินทาง (กิโลเมตร)"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="fuel">ปริมาณน้ำมันที่ใช้ (ลิตร)</label>
+                <input id="fuel" name="fuel" type="number" placeholder="กรอกปริมาณน้ำมันที่ใช้ (ลิตร)" required>
+            </div>
+
+            <button type="button" onclick="calculateFuelConsumption()">คำนวณ</button>
+            <button type="button" onclick="openHistory()">ประวัติ</button>
+        </form>
+
+        <div id="popup" class="popup">
+            <h2>อัตราสิ้นเปลืองเชื้อเพลิง</h2>
+            <div class="content">
+                <p id="result"></p>
+            </div>
+            <button class="close-btn" onclick="closePopup()">ปิด</button>
+        </div>
+    </div>
+    <div class="classbigback">
+        <div class="goback">
+            <a href="index.html" class="delline">
+                <h1>X</h1>
+            </a>
+        </div>
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzlYC71m_wR9uowyPdf-TJHpHrlUQgt2EJ3kkm5uYE1ITHzq67k4zr_hSM7kpXOMBon/exec';
+        const form = document.forms['hello-sheet'];
+
+        function calculateFuelConsumption() {
+            var fuelType = document.getElementById('fuelType').value;
+            var distance = document.getElementById('distance').value;
+            var fuel = document.getElementById('fuel').value;
+
+            if (fuelType && distance && fuel) {
+                var consumption = distance / fuel;
+                document.getElementById('result').innerText = consumption.toFixed(2) + ' กิโลเมตร/ลิตร';
+                openPopup();
+
+                sendDataToGoogleSheets(fuelType, distance, fuel, consumption.toFixed(2));
+            } else {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            }
+        }
+
+        function sendDataToGoogleSheets(fuelType, distance, fuel, consumption) {
+            var formData = new FormData(form);
+            formData.append('fuelType', fuelType);
+            formData.append('fuel-cons', consumption);
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => alert("บันทึกข้อมูลเรียบร้อยแล้ว.."))
+                .catch(error => console.error('Error!', error.message));
+        }
+
+        function openPopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            popup.style.opacity = '1';
+        }
+
+        function closePopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'none';
+            popup.style.opacity = '0';
+        }
+
+        function openHistory() {
+            window.open('https://docs.google.com/spreadsheets/d/15WU5hV6cXDuQvDzzrFAOjy4XM-gBw0-tsabWp0VWNfA/edit?usp=sharing');
+        }
+
+        // ป้องกันการซูม
+        window.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>

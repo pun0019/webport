@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap');
+
+
+body {
+    background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.topbar {
+    background-color: #2bae6694;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    object-fit: fill;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.main {
+    font-size: 36px;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    text-decoration-line: none;
+    margin-left: 300px;
+    font-weight: 800;
+}
+
+
+.delline {
+    text-decoration-line: none;
+    color: #17ac5a;
+}
+
+span {
+
+    color: black;
+}
+
+.log-re {
+    font-size: 26px;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-style: normal;
+    gap: 35px;
+    display: flex;
+    margin-right: 300px;
+    font-weight: 800;
+}
+
+.sec {
+    display: flex;
+    justify-content: space-around;
+    gap: 60px;
+    margin-top: 0px;
+    font-size: 28px;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-weight: 800;
+    background-color: #60606094;
+
+
+    h1,
+    h3,
+    h4,
+    h5,
+    h6 {
+
+        font-size: 36px;
+
+    }
+
+    h1:hover,
+    h3:hover,
+    h4:hover,
+    h5:hover,
+    h6:hover {
+
+        color: #992828;
+
+    }
+
+}
+
+.sec:hover {
+    color: #992828;
+}
+
+.posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+h2 {
+    color: white;
+    padding: 10px;
+    height: 40px;
+    width: auto;
+    text-align: center;
+    font-size: 40px;
+    filter: drop-shadow(0px 0px 30px cyan) drop-shadow(10px 10px 5px cyan);
+    margin-bottom: 20px;
+}
+
+
+.hee {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+
+    h2 {
+
+        letter-spacing: 5px;
+    }
+}
+
+.bigbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 50px;
+    gap: 30px;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-weight: 1000;
+}
+
+
+
+
+.slider-container {
+    width: 700px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 10px 10px 30px black;
+    margin: 0 auto;
+    margin-top: 35px;
+    display: block;
+}
+
+.slider {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    animation: slide 10s infinite;
+    box-shadow: 0px 0px 10px black;
+
+}
+
+.slider img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-50%);
+    }
+
+    95% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+
+.box1:hover,
+.box2:hover,
+.box3:hover,
+.box4:hover,
+.box5:hover {
+    transform: scale(1.1);
+}
+
+.box1,
+.box2,
+.box3,
+.box4,
+.box5 {
+    height: 150px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 0px 10px white;
+    background-color: #60606094;
+
+
+    h5 {
+        font-size: 40px;
+    }
+
+    h5:hover {
+        color: #992828;
+    }
+}
+
+
+
+
+
+@media only screen and (max-width: 480px) {
+
+    /* ปรับ Topbar */
+    .topbar {
+        padding: 5px;
+        height: 40px;
+    }
+
+    h1 {
+        font-size: 20px;
+
+
+    }
+
+    .main {
+        font-size: 24px;
+        margin-left: 10px;
+    }
+
+    .log-re {
+        font-size: 18px;
+        margin-right: 10px;
+        gap: 15px;
+    }
+
+    .hee {
+        margin-top: 80px;
+
+        h2 {
+
+            font-size: 28px;
+        }
+    }
+
+    /* ปรับ Section */
+    .sec {
+
+        gap: 5px;
+        font-size: 5px;
+        display: flex;
+        justify-content: space-between;
+        gap: 60px;
+        font-size: 28px;
+
+        h1 {
+            font-size: 28px;
+            margin: 5px;
+        }
+    }
+
+    .posts {
+        grid-template-columns: 1fr;
+    }
+
+    .slider-container {
+        margin-top: 60px;
+        width: 350px;
+        height: auto;
+    }
+
+    .box1,
+    .box2,
+    .box3,
+    .box4,
+    .box5 {
+
+        height: auto;
+        min-height: 120px;
+        
+    }
+
+    .box1 h5,
+    .box2 h5,
+    .box3 h5,
+    .box4 h5,
+    .box5 h5 {
+
+        font-size: 30px;
+        
+    }
+
+    .bigbox {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px;
+        padding: 10px;
+        max-width: 100%;
+   
+    }
+
+
+}

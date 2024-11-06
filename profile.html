@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        h1 {
+            font-size: 45px;
+            font-weight: 500;
+        }
+
+        body {
+            font-family: "IBM Plex Sans Thai", sans-serif;
+            margin: 20px;
+            background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            background-color: black;
+        }
+
+        p {
+            font-size: 24px;
+
+
+        }
+
+        .Profile {
+            line-height: 1.5;
+
+        }
+
+        .contract {
+            line-height: 1.5;
+
+            a {
+                font-weight: 1000;
+                font-size: 24px;
+                margin-left: 20px;
+                color: red;
+            }
+
+            h2 {
+                display: inline;
+                color: #fff;
+            }
+        }
+
+        .delline {
+            text-decoration-line: none;
+        }
+
+        .bigbox {
+            margin-left: 50px;
+            margin-top: 80px;
+            display: flex;
+            justify-content: right;
+            flex-direction: column;
+            background-color: rgba(96, 96, 96, 0.8);
+            width: 700px;
+            padding: 20px;
+            border-radius: 20px;
+            color: #2bae66;
+
+        }
+
+        img {
+            width: 600px;
+            height: auto;
+            margin-left: 20px;
+            border-radius: 25px;
+            position: absolute;
+            top: 50px;
+            left: 900px;
+            border-width: 20px;
+            border-color: #333;
+
+        }
+
+        .goback {
+            position: fixed;
+            width: 100px;
+            height: 60px;
+            background-color: #333;
+            border: solid white 1px;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+            h6 {
+                font-size: 36px;
+                color: #fff;
+            }
+
+            h6:hover {
+                font-size: 36px;
+                color: red;
+            }
+        }
+
+        .pro,
+        .con,
+        .sk {
+
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+
+
+            body {
+                font-size: 14px;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+                scale: 0.9;
+            }
+
+            img {
+                margin: 10px;
+                position: static;
+                width: 100%;
+                max-width: 600px;
+                justify-content: center;
+            }
+
+            .bigbox {
+                order: 2;
+                width: 90%;
+                margin-top: 0px;
+                margin-left: 0;
+                /* กำหนด margin-left เป็น 0 */
+                position: relative;
+                justify-content: flex-start;
+                /* จัดเนื้อหาให้ชิดซ้าย */
+                align-items: flex-start;
+
+            }
+
+            .goback {
+                margin-top: 100px;
+                position: relative;
+                left: 50%;
+                transform: translateX(-60%);
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 90%;
+                max-width: 300px;
+            }
+
+
+            .picme {
+                order: 1;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bigbox">
+        <h1> ประวัติส่วนตัว</h1>
+        <div class="pro">
+            <p>ชื่อ : ณภัทร บุญมา
+                <br>ชื่อเล่น : ปั้น
+                <br>เกิดเมื่อวันที่ : 19 มีนาคม พ.ศ.2550
+                <br>อายุ : 17 ปี
+                <br>แผนการเรียน : วิทย์ - คณิต
+                <br>
+            </p>
+        </div>
+
+        <div class="contract">
+            <h1>ข้อมูลการติดต่อ</h1>
+            <div class="con">
+                <h2>Intragram :</h2> <a href="https://www.instagram.com/_px.nnn/" class="delline">_px.nnn</a>
+                <br>
+                <h2>Facebook :</h2><a href="https://www.facebook.com/PunpunBoonma?mibextid=kFxxJD" class="delline">KAW
+                    PUN</a>
+                <p>Address : ------
+                </p>
+            </div>
+        </div>
+
+        <div class="skill">
+            <h1>ความสามารถพิเศษ</h1>
+            <div class="sk">
+                <p>เขียนโค้ดด้วยภาษา : HTML , CSS , Javascript , Python
+                    <br>ทักษะอื่นๆ : ใช้โปรแกรม Word , Excel , SketchUP
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="picme">
+        <img src="me.jpg" alt="ภาพของฉัน">
+    </div>
+
+
+    <div class="goback">
+        <a href="index.html" class="delline">
+            <h6>X</h1>
+        </a>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR GenerateWEB</title>
+
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        h1 {
+            color: #2bae66;
+            margin-bottom: 30px;
+            font-size: 48px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input {
+            margin-bottom: 20px;
+        }
+
+        input[type="url"] {
+            font-size: 28px;
+            padding: 15px;
+            width: 400px;
+            border-radius: 10px;
+            border: 2px solid limegreen;
+        }
+
+        button {
+            text-align: center;
+            border-radius: 20px;
+            width: 150px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #4CAF50;
+            transform: scale(1.1);
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            transition: 0.5s;
+        }
+
+        .goback {
+            position: fixed;
+            width: 100px;
+            height: 60px;
+            background-color: #333;
+            border: solid white 1px;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+            h1 {
+                font-size: 36px;
+                color: #fff;
+            }
+
+            h1:hover {
+                font-size: 36px;
+                color: red;
+            }
+        }
+
+        .delline {
+            text-decoration-line: none;
+        }
+
+
+        #qrcode {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        #saveButton {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+
+                scale: 0.9;
+            }
+
+            .goback {
+                transform: translate(-13%, -50%);
+                margin-top: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>QR GenerateWEB</h1>
+    </header>
+
+    <input type="url" id="genweb" name="homepage"
+        pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"
+        title="กรุณาใส่ URL ที่ถูกต้อง" placeholder="ใส่ URL ของคุณ">
+
+    <div class="but">
+        <button type="button" onclick="generateQRCode()">Generate</button>
+    </div>
+
+    <div id="qrcode"></div>
+
+    <button id="saveButton" style="display: none;" onclick="saveQRCode()">Save Image</button>
+
+    <div class="goback">
+        <a href="index.html" class="delline">
+            <h1>X</h1>
+        </a>
+    </div>
+
+
+    <script>
+        function generateQRCode() {
+            var url = document.getElementById("genweb").value;
+
+            // สร้างฟังก์ชันตรวจสอบ URL
+            function isValidURL(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            // ตรวจสอบว่ามีการใส่ URL หรือไม่
+            if (!url) {
+                alert("กรุณาป้อนลิ้งค์ก่อน");
+                return;
+            }
+
+            // ตรวจสอบว่าเป็น URL ที่ถูกต้องหรือไม่
+            if (!isValidURL(url)) {
+                alert("กรุณาใส่ URL ที่ถูกต้อง!!");
+                return;
+            }
+
+            // ล้าง QR Code ที่สร้างไว้ก่อนหน้า (ถ้ามี)
+            document.getElementById("qrcode").innerHTML = "";
+
+            // สร้าง QR Code
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 200,
+                height: 200
+            });
+
+            // แสดงปุ่ม Save หลังจากสร้าง QR Code
+            document.getElementById("saveButton").style.display = "block";
+        }
+
+        function saveQRCode() {
+            // เลือก canvas ที่สร้าง QR Code
+            var qrCanvas = document.querySelector('#qrcode canvas');
+
+            if (qrCanvas) {
+                // สร้างลิ้งค์เพื่อดาวน์โหลดภาพ QR Code
+                var link = document.createElement('a');
+                link.href = qrCanvas.toDataURL();
+                link.download = 'qrcode.png';
+                link.click();
+            }
+        }
+    </script>
+</body>
+
+</html>

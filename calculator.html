@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคิดเลข</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .calculator {
+            background-color: #2bae66bd;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 6px 10px black;
+        }
+
+        .bigback {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+
+
+        }
+
+        .goback {
+            position: fixed;
+            width: 100px;
+            height: 60px;
+            background-color: #333;
+            border: solid white 1px;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+            h1 {
+                font-size: 36px;
+                color: #fff;
+            }
+
+            h1:hover {
+                font-size: 36px;
+                color: red;
+            }
+        }
+
+        .delline {
+            text-decoration-line: none;
+        }
+
+        .display {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 36px;
+            text-align: right;
+            border: 5px;
+            border-width: 3px;
+        }
+
+        .button {
+            background-color: #606060;
+            border: 1px solid black;
+            border-radius: 5px;
+            border-width: 3px;
+            padding: 30px;
+            font-size: 24px;
+            margin: 10px;
+            cursor: pointer;
+
+        }
+
+        .buttonpy {
+            background-color: limegreen;
+            border: 1px solid black;
+            border-radius: 5px;
+            border-width: 3px;
+            padding: 30px;
+            font-size: 24px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .buttondel {
+            background-color: red;
+            border: 1px solid black;
+            border-radius: 5px;
+            border-width: 3px;
+            padding: 30px;
+            font-size: 24px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        .buttonpy:hover {
+            transform: scale(1.1);
+        }
+
+        .buttondel:hover {
+            transform: scale(1.1);
+        }
+
+        .button:active {
+            background-color: #fce5cd;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            color: #fff;
+        }
+
+
+        @media (max-width: 480px) {
+
+            body {
+
+                overflow: hidden;
+            }
+
+            .calculator {
+                scale: 0.75;
+                display: relative;
+                justify-content: center;
+                align-items: center;
+                transform: translate(0, -10%);
+            }
+
+            .display {
+                font-size: 35px
+            }
+
+            .display {
+
+                padding: 15px;
+            }
+
+            .grid {
+                margin-top: 20px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+            }
+
+            .button {
+
+                width: 90px;
+                height: auto;
+                padding: 0;
+                padding: 15px;
+                font-size: 30px;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .buttonpy {
+
+                font-size: 30px;
+            }
+
+            .goback {
+                transform: translate(-10%, -70%);
+                margin-top: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="grid">
+            <div class="button" onclick="appendNumber(7)">7</div>
+            <div class="button" onclick="appendNumber(8)">8</div>
+            <div class="button" onclick="appendNumber(9)">9</div>
+            <div class="buttonpy" onclick="setOperation('/')">/</div>
+            <div class="button" onclick="appendNumber(4)">4</div>
+            <div class="button" onclick="appendNumber(5)">5</div>
+            <div class="button" onclick="appendNumber(6)">6</div>
+            <div class="buttonpy" onclick="setOperation('')">X</div>
+            <div class="button" onclick="appendNumber(1)">1</div>
+            <div class="button" onclick="appendNumber(2)">2</div>
+            <div class="button" onclick="appendNumber(3)">3</div>
+            <div class="buttonpy" onclick="setOperation('-')">-</div>
+            <div class="button" onclick="appendNumber(0)">0</div>
+            <div class="buttondel" onclick="clearDisplay()">AC</div>
+            <div class="buttonpy" onclick="calculate()">=</div>
+            <div class="buttonpy" onclick="setOperation('+')">+</div>
+        </div>
+    </div>
+
+    <div class="bigback">
+        <div class="goback">
+            <a href="index.html" class="delline">
+                <h1>X</h1>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+        let operation = '';
+        let previousInput = '';
+
+        function appendNumber(number) {
+            if (currentInput.length < 10) { currentInput += number; updateDisplay(); }
+        } function setOperation(op) {
+            if
+                (currentInput === '') return; if (previousInput !== '') { calculate(); } operation = op;
+            previousInput = currentInput; currentInput = ''; updateDisplay();
+        } function calculate() {
+            let total; const
+                prev = parseFloat(previousInput); const curr = parseFloat(currentInput); if (isNaN(prev) || isNaN(curr)) return;
+            switch (operation) {
+                case '+': total = prev + curr; break; case '-': total = prev - curr; break; case '*':
+                    total = prev * curr; break; case '/': total = prev / curr; break; default: return;
+            } currentInput = total.toString();
+            operation = ''; previousInput = ''; updateDisplay();
+        } function clearDisplay() {
+            currentInput = '';
+            previousInput = ''; operation = ''; updateDisplay();
+        } function updateDisplay() {
+            const
+                display = document.getElementById('display'); display.innerText = `${previousInput} ${operation}
+        ${currentInput}`.trim() || '0';
+        } </script>
+</body>
+
+</html>

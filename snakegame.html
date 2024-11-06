@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+
+</head>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .scr {
+        margin-top: 100px;
+        text-align: center;
+        font-size: 48px;
+        font-family: "IBM Plex Sans Thai", sans-serif;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .move {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 100px;
+    }
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+    }
+
+    body {
+        background-image: url("https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        background-color: black;
+    }
+
+    .notion {
+
+        font-size: 36px;
+        color: red;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .goback {
+        position: fixed;
+        width: 100px;
+        height: 60px;
+        background-color: #333;
+        border: solid white 1px;
+        right: 20px;
+        bottom: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+        h1 {
+            font-size: 36px;
+            color: #fff;
+        }
+
+        h1:hover {
+            font-size: 36px;
+            color: red;
+        }
+    }
+
+    .delline {
+        text-decoration-line: none;
+    }
+
+    @media only screen and (max-width: 480px) {
+        body {
+            font-size: 14px;
+            padding: 10px;
+            min-height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+
+
+        }
+
+        .notion {
+
+            font-size: 23px;
+            color: red;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        header,
+        footer {
+            display: none;
+        }
+
+        .container {
+            width: 100%;
+            padding: 5px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        nav ul {
+            flex-direction: column;
+            /* Stack navigation items */
+            padding: 0;
+        }
+
+        .goback {
+            transform: translate(-13%, -60%);
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+
+    }
+</style>
+
+<body>
+
+
+
+    <div class="scr">Score : <span id="score">0</span></div>
+
+    <div class="notion">
+        <h3> *** เล่นได้เฉพาะ PC เท่านั้น *** </h3>
+    </div>
+
+    <div class="move">
+        <canvas id="canvas" width="400" height="400"></canvas>
+    </div>
+
+    <div class="goback">
+        <a href="index.html" class="delline">
+            <h1>X</h1>
+        </a>
+    </div>
+
+    <script>
+        let canvas, ctx;
+        let score = 0;
+
+
+
+        window.onload = function () {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext("2d");
+
+            document.addEventListener("keydown", keyDownEvent);
+
+            // render X times per second
+            let x = 8;
+            setInterval(draw, 1000 / x);
+        };
+
+        // game world 
+        let gridSize = tileSize = 20; // 20 x 20 = 400
+        let nextX = nextY = 0;
+
+        // score
+
+        // snake 
+        let defaultTailSize = 1;
+        let tailSize = defaultTailSize;
+        let snakeTrail = [];
+        let snakeX = snakeY = 10;
+
+        // apple 
+        let appleX = appleY = 15;
+
+        // draw 
+        function draw() {
+            // move snake in next pos
+            snakeX += nextX;
+            snakeY += nextY;
+
+            // snake over game world?
+            if (snakeX < 0) {
+                snakeX = gridSize - 1;
+            }
+            if (snakeX > gridSize - 1) {
+                snakeX = 0;
+            }
+
+            if (snakeY < 0) {
+                snakeY = gridSize - 1;
+            }
+
+            if (snakeY > gridSize - 1) {
+                snakeY = 0;
+            }
+
+            // snake bite apple 
+            if (snakeX == appleX && snakeY == appleY) {
+                tailSize++;
+                score += 10;
+                document.getElementById('score').innerHTML = score;
+
+                appleX = Math.floor(Math.random() * gridSize);
+                appleY = Math.floor(Math.random() * gridSize);
+            }
+
+            // paint background 
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // paint snake
+            ctx.fillStyle = "green";
+            for (let i = 0; i < snakeTrail.length; i++) {
+                ctx.fillRect(
+                    snakeTrail[i].x * tileSize,
+                    snakeTrail[i].y * tileSize,
+                    tileSize,
+                    tileSize
+                );
+
+                // snake bites it's tail
+                if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY) {
+                    tailSize = defaultTailSize;
+                    score = 0;
+                    document.getElementById('score').innerHTML = score;
+                }
+            }
+
+            // paint apple
+            ctx.fillStyle = "red";
+            ctx.fillRect(appleX * tileSize, appleY * tileSize, tileSize, tileSize);
+
+            //set snake trail
+            snakeTrail.push({ x: snakeX, y: snakeY });
+            while (snakeTrail.length > tailSize) {
+                snakeTrail.shift();
+                console.log(snakeTrail)
+            }
+        }
+        // input
+        function keyDownEvent(e) {
+            switch (e.keyCode) {
+                case 37:
+                    nextX = -1;
+                    nextY = 0;
+                    break;
+                case 38:
+                    nextX = 0;
+                    nextY = -1;
+                    break;
+                case 39:
+                    nextX = 1;
+                    nextY = 0;
+                    break;
+                case 40:
+                    nextX = 0;
+                    nextY = 1;
+                    break;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
